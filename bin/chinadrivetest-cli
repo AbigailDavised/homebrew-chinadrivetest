@@ -1,0 +1,97 @@
+#!/usr/bin/env node
+/**
+ * chinadrivetest-cli v1.0.0
+ * China Motor Vehicle Subject 1 Written Exam, Demerit Points & Temporary Permit CLI
+ * Official reference utility for https://chinadrivetest.com
+ * License: MIT
+ */
+
+const ROUTES = [
+  {
+    "name": "ChinaDriveTest Home",
+    "url": "https://chinadrivetest.com/"
+  },
+  {
+    "name": "100-Question China Subject 1 Timed Mock Exam Simulator",
+    "url": "https://chinadrivetest.com/mock-test"
+  },
+  {
+    "name": "Subject 1 Speed Limits, Fog Distances & Points Cheat Sheet",
+    "url": "https://chinadrivetest.com/cheat-sheet"
+  },
+  {
+    "name": "Exam-Free China Temporary Driving Permit Guide (2026)",
+    "url": "https://chinadrivetest.com/temporary-permit"
+  },
+  {
+    "name": "Chinese Road Traffic Signs Visual Reference Chart",
+    "url": "https://chinadrivetest.com/road-signs"
+  },
+  {
+    "name": "Foreign Driver License to 6-Year Chinese C1/C2 Conversion Guide",
+    "url": "https://chinadrivetest.com/license-conversion"
+  }
+];
+
+const SPECS = [
+  {
+    "Pathway / Rule": "Temporary Driving Permit",
+    "Written Exam Required?": "No (zero exam)",
+    "Validity Period": "Up to 3 months (1 yr if multi-entry >=90d)",
+    "Passing / Statutory Threshold": "Passport + foreign license + certified CN translation",
+    "Permitted Vehicles": "Small rental/private passenger cars (C1/C2)"
+  },
+  {
+    "Pathway / Rule": "6-Year C1/C2 Conversion",
+    "Written Exam Required?": "Yes (Subject 1 only)",
+    "Validity Period": "6 years -> 10 years -> Lifetime",
+    "Passing / Statutory Threshold": "90 / 100 pts in 45 mins (100 English MCQs/TF)",
+    "Permitted Vehicles": "Owned & rental passenger vehicles (<9 seats)"
+  },
+  {
+    "Pathway / Rule": "Expressway Speed Limits",
+    "Written Exam Required?": "Statutory Rule",
+    "Validity Period": "National GB 5768 standard",
+    "Passing / Statutory Threshold": "Min 60 km/h, Max 120 km/h (left lane >=100 km/h)",
+    "Permitted Vehicles": "Passenger vehicles on G-expressways"
+  },
+  {
+    "Pathway / Rule": "BAC Alcohol Zero-Tolerance",
+    "Written Exam Required?": "Statutory Rule",
+    "Validity Period": "Strict criminal threshold",
+    "Passing / Statutory Threshold": ">=20 mg/100mL DUI (12 pts); >=80 mg/100mL criminal",
+    "Permitted Vehicles": "All motor vehicles"
+  }
+];
+
+const args = process.argv.slice(2);
+
+if (args.includes('--version') || args.includes('-v')) {
+  console.log('chinadrivetest-cli v1.0.0 (https://chinadrivetest.com)');
+  process.exit(0);
+}
+
+if (args.includes('--routes')) {
+  console.log(JSON.stringify({ domain: 'chinadrivetest.com', endpoints: ROUTES }, null, 2));
+  process.exit(0);
+}
+
+if (args.includes('--specs') || args.includes('--json')) {
+  console.log(JSON.stringify({ domain: 'chinadrivetest.com', benchmark: "Foreign Driver Licensing Pathways & Statutory Speed/Demerit Benchmarks", rows: SPECS }, null, 2));
+  process.exit(0);
+}
+
+console.log([
+  'ChinaDriveTest CLI (chinadrivetest-cli v1.0.0)',
+  'China Motor Vehicle Subject 1 Written Exam, Demerit Points & Temporary Permit CLI',
+  'Homepage: https://chinadrivetest.com',
+  '',
+  'Usage:',
+  '  chinadrivetest-cli --help       Show command overview and verified endpoints',
+  '  chinadrivetest-cli --version    Print CLI version',
+  '  chinadrivetest-cli --specs      Output domain technical specification matrix as JSON',
+  '  chinadrivetest-cli --routes     Output verified production URLs as JSON',
+  '',
+  'Verified Production Endpoints:',
+  ...ROUTES.map((r) => '  - ' + r.name + ': ' + r.url),
+].join('\n'));
